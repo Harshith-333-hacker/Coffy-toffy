@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Brew & Bean — Artisan Coffee</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cream: #FAF6F0;
+    --espresso: #2C1A0E;
+    --caramel: #C07B3A;
+    --latte: #D4A574;
+    --foam: #F5ECD7;
+    --dark-roast: #1A0F08;
+    --muted: #8B7355;
+    --text: #3D2B1F;
+    --white: #FFFFFF;
+    --star: #E8A020;
+    --badge-green: #2D6A4F;
+    --badge-green-bg: #D8F3DC;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--cream);
+    color: var(--text);
+    line-height: 1.6;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--espresso);
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.3);
+  }
+
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    color: var(--latte);
+    letter-spacing: 0.04em;
+  }
+
+  .nav-logo span { color: var(--white); }
+
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: rgba(255,255,255,0.75);
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--latte); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 90vh;
+    background: var(--dark-roast);
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    padding: 4rem 2rem;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 30% 60%, rgba(192,123,58,0.18) 0%, transparent 65%),
+                radial-gradient(ellipse at 80% 20%, rgba(212,165,116,0.1) 0%, transparent 55%);
+  }
+
+  .hero-content {
+    position: relative;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+    width: 100%;
+  }
+
+  .hero-eyebrow {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--caramel);
+    margin-bottom: 1.25rem;
+  }
+
+  .hero-headline {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    font-weight: 700;
+    color: var(--white);
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-headline em {
+    font-style: italic;
+    color: var(--latte);
+  }
+
+  .hero-sub {
+    font-size: 1.05rem;
+    color: rgba(255,255,255,0.6);
+    font-weight: 300;
+    max-width: 440px;
+    margin-bottom: 2.5rem;
+    line-height: 1.75;
+  }
+
+  .hero-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--caramel);
+    color: var(--white);
+    text-decoration: none;
+    padding: 0.875rem 2rem;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    letter-spacing: 0.04em;
+    transition: background 0.2s, transform 0.15s;
+  }
+
+  .hero-cta:hover { background: var(--latte); transform: translateY(-2px); }
+
+  .hero-stats {
+    display: flex;
+    gap: 2.5rem;
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255,255,255,0.1);
+  }
+
+  .hero-stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.75rem;
+    color: var(--latte);
+    display: block;
+  }
+
+  .hero-stat-label {
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.45);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .hero-visual {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .coffee-circle {
+    width: 360px;
+    height: 360px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #3D2000, #7B4A1E);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 9rem;
+    box-shadow: 0 0 0 2px rgba(192,123,58,0.3), 0 0 80px rgba(192,123,58,0.15);
+  }
+
+  /* ── SECTION COMMON ── */
+  section { padding: 5rem 2rem; }
+
+  .container { max-width: 1200px; margin: 0 auto; }
+
+  .section-eyebrow {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--caramel);
+    margin-bottom: 0.5rem;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 3vw, 2.8rem);
+    font-weight: 700;
+    color: var(--espresso);
+    margin-bottom: 0.75rem;
+    line-height: 1.2;
+  }
+
+  .section-sub {
+    font-size: 1rem;
+    color: var(--muted);
+    max-width: 500px;
+    font-weight: 300;
+    line-height: 1.75;
+  }
+
+  .section-header { margin-bottom: 3rem; }
+
+  /* ── FILTER TABS ── */
+  .filter-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .filter-btn {
+    border: 1.5px solid var(--latte);
+    background: transparent;
+    color: var(--text);
+    padding: 0.45rem 1.1rem;
+    border-radius: 50px;
+    font-size: 0.82rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.18s;
+    font-family: 'Inter', sans-serif;
+  }
+
+  .filter-btn:hover, .filter-btn.active {
+    background: var(--espresso);
+    border-color: var(--espresso);
+    color: var(--white);
+  }
+
+  /* ── MENU GRID ── */
+  .menu-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.75rem;
+  }
+
+  /* ── CARD ── */
+  .card {
+    background: var(--white);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(44,26,14,0.07);
+    transition: transform 0.22s, box-shadow 0.22s;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+
+  .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 36px rgba(44,26,14,0.14);
+  }
+
+  .card-img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    display: block;
+  }
+
+  .card-img-fallback {
+    width: 100%;
+    height: 200px;
+    background: linear-gradient(135deg, #3D2000, #8B5A2B);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 4rem;
+  }
+
+  .badge-bestseller {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    background: var(--espresso);
+    color: var(--latte);
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 50px;
+  }
+
+  .card-body { padding: 1.25rem 1.4rem 1.4rem; flex: 1; display: flex; flex-direction: column; }
+
+  .card-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--espresso);
+    margin-bottom: 0.35rem;
+  }
+
+  .card-origin {
+    font-size: 0.75rem;
+    color: var(--caramel);
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 0.6rem;
+  }
+
+  .card-desc {
+    font-size: 0.875rem;
+    color: var(--muted);
+    line-height: 1.65;
+    flex: 1;
+    margin-bottom: 1rem;
+  }
+
+  .card-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: auto;
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--foam);
+  }
+
+  .stars {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    font-size: 0.85rem;
+    color: var(--star);
+  }
+
+  .stars span {
+    font-size: 0.78rem;
+    color: var(--muted);
+    margin-left: 4px;
+    font-weight: 500;
+  }
+
+  .prep-time {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.78rem;
+    color: var(--muted);
+    font-weight: 500;
+  }
+
+  .prep-time svg { opacity: 0.65; }
+
+  .card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.9rem 1.4rem;
+    background: var(--foam);
+  }
+
+  .price {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    color: var(--espresso);
+    font-weight: 700;
+  }
+
+  .price sup { font-size: 0.75rem; vertical-align: super; }
+
+  .order-btn {
+    background: var(--caramel);
+    color: var(--white);
+    border: none;
+    padding: 0.5rem 1.1rem;
+    border-radius: 50px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    transition: background 0.18s;
+  }
+
+  .order-btn:hover { background: var(--espresso); }
+
+  /* ── ABOUT SECTION ── */
+  .about-section {
+    background: var(--espresso);
+    color: var(--white);
+  }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: center;
+  }
+
+  .about-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 3vw, 2.6rem);
+    line-height: 1.2;
+    margin-bottom: 1.25rem;
+    color: var(--white);
+  }
+
+  .about-title em { font-style: italic; color: var(--latte); }
+
+  .about-text {
+    font-size: 0.95rem;
+    color: rgba(255,255,255,0.65);
+    line-height: 1.8;
+    margin-bottom: 1rem;
+    font-weight: 300;
+  }
+
+  .about-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .about-card {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 14px;
+    padding: 1.25rem;
+  }
+
+  .about-card-icon { font-size: 1.8rem; margin-bottom: 0.6rem; display: block; }
+  .about-card-title { font-size: 0.9rem; font-weight: 600; color: var(--latte); margin-bottom: 0.3rem; }
+  .about-card-text { font-size: 0.8rem; color: rgba(255,255,255,0.5); line-height: 1.6; }
+
+  /* ── TESTIMONIALS ── */
+  .testimonials-section { background: var(--foam); }
+
+  .testimonial-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .testimonial-card {
+    background: var(--white);
+    border-radius: 16px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 10px rgba(44,26,14,0.06);
+  }
+
+  .t-stars { color: var(--star); font-size: 0.85rem; margin-bottom: 0.75rem; }
+
+  .t-quote {
+    font-size: 0.9rem;
+    color: var(--text);
+    line-height: 1.7;
+    font-style: italic;
+    margin-bottom: 1rem;
+  }
+
+  .t-author {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .t-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--latte);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.8rem;
+    color: var(--espresso);
+    flex-shrink: 0;
+  }
+
+  .t-name { font-size: 0.85rem; font-weight: 600; color: var(--espresso); }
+  .t-meta { font-size: 0.75rem; color: var(--muted); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--dark-roast);
+    color: rgba(255,255,255,0.55);
+    text-align: center;
+    padding: 2.5rem 2rem;
+    font-size: 0.85rem;
+  }
+
+  footer strong { color: var(--latte); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    .hero-content { grid-template-columns: 1fr; gap: 2.5rem; }
+    .hero-visual { display: none; }
+    .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    .nav-links { display: none; }
+  }
+
+  /* ── HIDDEN ── */
+  .card[data-hidden="true"] { display: none; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Brew <span>&</span> Bean</div>
+  <ul class="nav-links">
+    <li><a href="#menu">Menu</a></li>
+    <li><a href="#about">Our Story</a></li>
+    <li><a href="#reviews">Reviews</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <div>
+      <p class="hero-eyebrow">Est. 2018 · Specialty Coffee</p>
+      <h1 class="hero-headline">Where every cup tells a <em>story</em></h1>
+      <p class="hero-sub">Handcrafted espresso drinks, single-origin pour-overs, and seasonal creations made with beans sourced from the world's finest farms.</p>
+      <a href="#menu" class="hero-cta">Explore the menu →</a>
+      <div class="hero-stats">
+        <div>
+          <span class="hero-stat-num">18+</span>
+          <span class="hero-stat-label">Signature drinks</span>
+        </div>
+        <div>
+          <span class="hero-stat-num">4.9★</span>
+          <span class="hero-stat-label">Average rating</span>
+        </div>
+        <div>
+          <span class="hero-stat-num">6yr</span>
+          <span class="hero-stat-label">In the community</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="coffee-circle">☕</div>
+    </div>
+  </div>
+</section>
+
+<!-- MENU -->
+<section id="menu">
+  <div class="container">
+    <div class="section-header">
+      <p class="section-eyebrow">Our offerings</p>
+      <h2 class="section-title">The full menu</h2>
+      <p class="section-sub">From bold single-origin espresso to velvety lattes — every drink crafted to order.</p>
+    </div>
+
+    <div class="filter-row">
+      <button class="filter-btn active" onclick="filterMenu('all', this)">All drinks</button>
+      <button class="filter-btn" onclick="filterMenu('espresso', this)">Espresso</button>
+      <button class="filter-btn" onclick="filterMenu('milk', this)">Milk based</button>
+      <button class="filter-btn" onclick="filterMenu('cold', this)">Cold brew</button>
+      <button class="filter-btn" onclick="filterMenu('specialty', this)">Specialty</button>
+    </div>
+
+    <div class="menu-grid" id="menuGrid">
+
+      <!-- Card 1: Espresso -->
+      <div class="card" data-category="espresso">
+        <div class="badge-bestseller">⭐ Best Seller</div>
+        <div class="card-img-fallback">☕</div>
+        <div class="card-body">
+          <p class="card-origin">Single Origin · Ethiopia</p>
+          <h3 class="card-name">Classic Espresso</h3>
+          <p class="card-desc">Intense, syrupy shot with notes of dark chocolate and wild berry — the foundation of everything we do.</p>
+          <div class="card-meta">
+            <div class="stars">★★★★★ <span>4.9 (312)</span></div>
+            <div class="prep-time">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+              2 min
+            </div>
+          </div>
+        </div>
+        <div class="card-footer">
+          <div class="price"><sup>₹</sup>180</div>
+          <button class="order-btn">Order now</button>
+        </div>
+      </div>
+
+      <!-- Card 2: Cappuccino -->
+      <div class="card" data-category="milk">
+        <div class="badge-bestseller">⭐ Best Seller</div>
+        <div class="card-img-fallback">🍵</div>
+        <div class="card-body">
+          <p class="card-origin">Blend · Colombia + Brazil</p>
+          <h3 class="card-name">Velvet Cappuccino</h3>
+          <p class="card-desc">Equal thirds of espresso, steamed milk, and cloud-like micro-foam — classic Italian balance in every sip.</p>
+          <div class="card-meta">
+            <div class="stars">★★★★★ <span>4.8 (287)</span></div>
+            <div class="prep-time">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+              4 min
+            </div>
+          </div>
+        </div>
+        <div class="card-footer">
+          <div class="price"><sup>₹</sup>240</div>
+          <button class="order-btn">Order now</button>
+        </div>
+      </div>
+
+      <!-- Card 3: Cold Brew -->
+      <div class="card" data-category="cold">
+        <div class="card-img-fallback">🧊</div>
+        <div class="card-body">
+          <p class="card-origin">Cold Brew · Guatemala</p>
+          <h3 class="card-name">Midnight Cold Brew</h3>
+          <p class="card-desc">Steeped 18 hours in cold water, yielding a silky, low-acid coffee that's naturally sweet and incredibly smooth.</p>
+          <div class="card-meta">
+            <div class="stars">★★★★☆ <span>4.7 (194)</span></div>
+            <div class="prep-time">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+              1 min
+            </div>
+          </div>
+        </div>
+        <div class="card-footer">
+          <div class="price"><sup>₹</sup>290</div>
+          <button class="order-btn">Order now</button>
+        </div>
+      </div>
+
+      <!-- Card 4: Caramel Latte -->
+      <div class="card" data-category="milk">
+        <div class="badge-bestseller">⭐ Best Seller</div>
+        <div class="card-img-fallback">🥛</div>
+        <div class="card-body">
+          <p class="card-origin">Espresso Blend · Brazil</p>
+          <h3 class="card-name">Salted Caramel Latte</h3>
+          <p class="card-desc">Double shot of espresso with silky steamed milk, house-made caramel drizzle, and a whisper of sea salt flakes.</p>
+          <div class="card-meta">
+            <div class="stars">★★★★★ <span>4.9 (421)</span></div>
+            <div class="prep-time">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+              5 min
+            </div>
+          </div>
+        </div>
+        <div class="card-footer">
+          <div class="price"><sup>₹</sup>320</div>
+          <button class="order-btn">Order now</button>
+        </div>
+      </div>
+
+      <!-- Card 5: Flat White -->
+      <div class="card" data-category="milk">
+        <div class="card-img-fallback">☁️</div>
+        <div class="card-body">
+          <p class="card-origin">Ristretto · Ethiopia</p>
+          <h3 class="card-name">Flat White</h3>
+          <p class="card-desc">Ristretto shot with textured micro-foam poured to the rim — more coffee, less froth, pure intensity.</p>
+          <div class="card-meta">
+            <div class="stars">★★★★★ <span>4.8 (178)</span></div>
+            <div class="prep-time">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+              4 min
+            </div>
+          </div>
+        </div>
+        <div class="card-footer">
+          <div class="price"><sup>₹</sup>260</div>
+          <button class="order-btn">Order now</button>
+        </div>
+      </div>
+
+      <!-- Card 6: Pour Over -->
+      <div class="card" data-category="specialty">
+        <div class="card-img-fallback">⚗️</div>
+        <div class="card-body">
+          <p class="card-origin">Pour Over · Kenya AA</p>
+          <h3 class="card-name">Kenyan Pour Over</h3>
+          <p class="card-desc">Hand-poured to a precise 93°C ratio, this Kenya AA offers bright citrus acidity, juicy tomato notes, and a wine-like finish.</p>
+          <div class="card-meta">
+            <div class="stars">★★★★★ <span>4.9 (89)</span></div>
+            <div class="prep-time">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+              7 min
+            </div>
+          </div>
+        </div>
+        <div class="card-footer">
+          <div class="price"><sup>₹</sup>380</div>
+          <button class="order-btn">Order now</button>
+        </div>
+      </div>
+
+      <!-- Card 7: Iced Mocha -->
+      <div class="card" data-category="cold">
+        <div class="card-img-fallback">🍫</div>
+        <div class="card-body">
+          <p class="card-origin">Double Shot · Colombia</p>
+          <h3 class="card-name">Dark Iced Mocha</h3>
+          <p class="card-desc">Rich double espresso shaken with 70% dark Belgian chocolate, poured over ice with a splash of whole milk.</p>
+          <div class="card-meta">
+            <div class="stars">★★★★☆ <span>4.6 (156)</span></div>
+            <div class="prep-time">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+              4 min
+            </div>
+          </div>
+        </div>
+        <div class="card-footer">
+          <div class="price"><sup>₹</sup>310</div>
+          <button class="order-btn">Order now</button>
+        </div>
+      </div>
+
+      <!-- Card 8: Cortado -->
+      <div class="card" data-category="espresso">
+        <div class="card-img-fallback">🔥</div>
+        <div class="card-body">
+          <p class="card-origin">Double Shot · Costa Rica</p>
+          <h3 class="card-name">Spanish Cortado</h3>
+          <p class="card-desc">Equal parts espresso and warm milk, cutting the acidity while preserving the bold character of the bean.</p>
+          <div class="card-meta">
+            <div class="stars">★★★★★ <span>4.7 (112)</span></div>
+            <div class="prep-time">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+              3 min
+            </div>
+          </div>
+        </div>
+        <div class="card-footer">
+          <div class="price"><sup>₹</sup>200</div>
+          <button class="order-btn">Order now</button>
+        </div>
+      </div>
+
+      <!-- Card 9: Matcha -->
+      <div class="card" data-category="specialty">
+        <div class="card-img-fallback">🍵</div>
+        <div class="card-body">
+          <p class="card-origin">Ceremonial Grade · Japan</p>
+          <h3 class="card-name">Matcha Cloud Latte</h3>
+          <p class="card-desc">Ceremonial-grade Japanese matcha whisked to a froth, layered over oat milk foam with a dusting of matcha powder.</p>
+          <div class="card-meta">
+            <div class="stars">★★★★★ <span>4.8 (203)</span></div>
+            <div class="prep-time">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+              6 min
+            </div>
+          </div>
+        </div>
+        <div class="card-footer">
+          <div class="price"><sup>₹</sup>340</div>
+          <button class="order-btn">Order now</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="about-section">
+  <div class="container">
+    <div class="about-grid">
+      <div>
+        <p class="section-eyebrow" style="color:var(--caramel);">Our philosophy</p>
+        <h2 class="about-title">Coffee is craft, not <em>convenience</em></h2>
+        <p class="about-text">We believe a great cup of coffee starts long before it reaches your hands. We source directly from farmers who share our obsession with quality, visit farms twice a year, and roast in small batches every week.</p>
+        <p class="about-text">Every barista at Brew & Bean completes a 60-hour certification before pulling their first shot for a customer. Precision and warmth, in every cup.</p>
+      </div>
+      <div class="about-cards">
+        <div class="about-card">
+          <span class="about-card-icon">🌍</span>
+          <p class="about-card-title">Direct trade</p>
+          <p class="about-card-text">Sourced from 8 countries, 14 partner farms — fair prices, always.</p>
+        </div>
+        <div class="about-card">
+          <span class="about-card-icon">🔬</span>
+          <p class="about-card-title">Small batch roasting</p>
+          <p class="about-card-text">Every batch roasted weekly in-house to peak freshness.</p>
+        </div>
+        <div class="about-card">
+          <span class="about-card-icon">🏆</span>
+          <p class="about-card-title">Award winning</p>
+          <p class="about-card-text">Best Specialty Coffee, South India — 2023 & 2024.</p>
+        </div>
+        <div class="about-card">
+          <span class="about-card-icon">🌱</span>
+          <p class="about-card-title">Sustainable</p>
+          <p class="about-card-text">Zero single-use plastic. Composted coffee grounds weekly.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="reviews" class="testimonials-section">
+  <div class="container">
+    <div class="section-header">
+      <p class="section-eyebrow">Customer love</p>
+      <h2 class="section-title">What people are saying</h2>
+      <p class="section-sub">Over 2,400 reviews across platforms — here's a taste.</p>
+    </div>
+    <div class="testimonial-grid">
+      <div class="testimonial-card">
+        <div class="t-stars">★★★★★</div>
+        <p class="t-quote">"The Salted Caramel Latte is the only reason I get out of bed on Monday mornings. The balance of sweet, salty, and bitter is just perfect."</p>
+        <div class="t-author">
+          <div class="t-avatar">PR</div>
+          <div>
+            <p class="t-name">Priya R.</p>
+            <p class="t-meta">Regular since 2021 · Google</p>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="t-stars">★★★★★</div>
+        <p class="t-quote">"I travel to Madurai twice a month and Brew & Bean is the first stop every single time. The Kenyan pour-over is a religious experience."</p>
+        <div class="t-author">
+          <div class="t-avatar">AK</div>
+          <div>
+            <p class="t-name">Arjun K.</p>
+            <p class="t-meta">Coffee enthusiast · Zomato</p>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="t-stars">★★★★★</div>
+        <p class="t-quote">"Finally a place that takes cold brew seriously. The Midnight Cold Brew is smooth, bold, and never bitter. I've converted my whole team."</p>
+        <div class="t-author">
+          <div class="t-avatar">SM</div>
+          <div>
+            <p class="t-name">Sunita M.</p>
+            <p class="t-meta">Office of 12 · Swiggy</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2025 <strong>Brew & Bean</strong> · Madurai, Tamil Nadu · All rights reserved.</p>
+  <p style="margin-top:0.4rem; font-size:0.75rem;">Mon–Fri 7am–9pm · Sat–Sun 8am–10pm · +91 98765 43210</p>
+</footer>
+
+<script>
+function filterMenu(category, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.card').forEach(card => {
+    if (category === 'all' || card.dataset.category === category) {
+      card.removeAttribute('data-hidden');
+    } else {
+      card.setAttribute('data-hidden', 'true');
+    }
+  });
+}
+</script>
+</body>
+</html>
